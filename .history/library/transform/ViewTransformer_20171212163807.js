@@ -1,7 +1,6 @@
 'use strict';
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import ReactNative, {
   View,
   Animated,
@@ -9,9 +8,9 @@ import ReactNative, {
   NativeModules
 } from 'react-native';
 
-import { createResponder } from 'react-native-gesture-responder';
+import {createResponder} from 'react-native-gesture-responder';
 import Scroller from 'react-native-scroller';
-import { Rect, Transform, transformedRect, availableTranslateSpace, fitCenterRect, alignedRect, getTransform } from './TransformUtils';
+import {Rect, Transform, transformedRect, availableTranslateSpace, fitCenterRect, alignedRect, getTransform} from './TransformUtils';
 
 export default class ViewTransformer extends React.Component {
 
@@ -42,7 +41,7 @@ export default class ViewTransformer extends React.Component {
     this.transformedContentRect = this.transformedContentRect.bind(this);
     this.animate = this.animate.bind(this);
 
-    this.scroller = new Scroller(true, (dx, dy, scroller) => {
+    this.scroller = new Scroller(true, (dx, dy, scroller) =>{
       if (dx === 0 && dy === 0 && scroller.isFinished()) {
         this.animateBounce();
         return;
@@ -124,10 +123,10 @@ export default class ViewTransformer extends React.Component {
           style={{
             flex: 1,
             transform: [
-              { scale: this.state.scale },
-              { translateX: this.state.translateX },
-              { translateY: this.state.translateY }
-            ]
+                  {scale: this.state.scale},
+                  {translateX: this.state.translateX},
+                  {translateY: this.state.translateY}
+                ]
           }}>
           {this.props.children}
         </View>
@@ -136,9 +135,9 @@ export default class ViewTransformer extends React.Component {
   }
 
   onLayout(e) {
-    const { width, height } = e.nativeEvent.layout;
-    if (width !== this.state.width || height !== this.state.height) {
-      this.setState({ width, height });
+    const {width, height} = e.nativeEvent.layout;
+    if(width !== this.state.width || height !== this.state.height) {
+      this.setState({width, height});
     }
     this.measureLayout();
 
@@ -148,8 +147,8 @@ export default class ViewTransformer extends React.Component {
   measureLayout() {
     let handle = ReactNative.findNodeHandle(this.refs['innerViewRef']);
     NativeModules.UIManager.measure(handle, ((x, y, width, height, pageX, pageY) => {
-      if (typeof pageX === 'number' && typeof pageY === 'number') { //avoid undefined values on Android devices
-        if (this.state.pageX !== pageX || this.state.pageY !== pageY) {
+      if(typeof pageX === 'number' && typeof pageY === 'number') { //avoid undefined values on Android devices
+        if(this.state.pageX !== pageX || this.state.pageY !== pageY) {
           this.setState({
             pageX: pageX,
             pageY: pageY
@@ -162,7 +161,7 @@ export default class ViewTransformer extends React.Component {
 
   onResponderGrant(evt, gestureState) {
     this.props.onTransformStart && this.props.onTransformStart();
-    this.setState({ responderGranted: true });
+    this.setState({responderGranted: true});
     this.measureLayout();
   }
 
@@ -177,7 +176,7 @@ export default class ViewTransformer extends React.Component {
       dy = d.dy;
     }
 
-    if (!this.props.enableTranslate) {
+    if(!this.props.enableTranslate) {
       dx = dy = 0;
     }
 
@@ -212,10 +211,10 @@ export default class ViewTransformer extends React.Component {
 
   onResponderRelease(evt, gestureState) {
     let handled = this.props.onTransformGestureReleased && this.props.onTransformGestureReleased({
-      scale: this.state.scale,
-      translateX: this.state.translateX,
-      translateY: this.state.translateY
-    });
+        scale: this.state.scale,
+        translateX: this.state.translateX,
+        translateY: this.state.translateY
+      });
     if (handled) {
       return;
     }
@@ -237,7 +236,7 @@ export default class ViewTransformer extends React.Component {
 
       this.performDoubleTapUp(pivotX, pivotY);
     } else {
-      if (this.props.enableTranslate) {
+      if(this.props.enableTranslate) {
         this.performFling(gestureState.vx, gestureState.vy);
       } else {
         this.animateBounce();
@@ -356,7 +355,7 @@ export default class ViewTransformer extends React.Component {
 
     this.state.animator.removeAllListeners();
     this.state.animator.setValue(0);
-    this.state.animator.addListener((state) => {
+    this.state.animator.addListener((state) =>{
       let progress = state.value;
 
       let left = fromRect.left + (targetRect.left - fromRect.left) * progress;
@@ -422,36 +421,36 @@ ViewTransformer.propTypes = {
   /**
    * Use false to disable transform. Default is true.
    */
-  enableTransform: PropTypes.bool,
+  enableTransform: React.PropTypes.bool,
 
   /**
    * Use false to disable scaling. Default is true.
    */
-  enableScale: PropTypes.bool,
+  enableScale: React.PropTypes.bool,
 
   /**
    * Use false to disable translateX/translateY. Default is true.
    */
-  enableTranslate: PropTypes.bool,
+  enableTranslate: React.PropTypes.bool,
 
   /**
    * Default is 20
    */
-  maxOverScrollDistance: PropTypes.number,
+  maxOverScrollDistance: React.PropTypes.number,
 
-  maxScale: PropTypes.number,
-  contentAspectRatio: PropTypes.number,
+  maxScale: React.PropTypes.number,
+  contentAspectRatio: React.PropTypes.number,
 
   /**
    * Use true to enable resistance effect on over pulling. Default is false.
    */
-  enableResistance: PropTypes.bool,
+  enableResistance: React.PropTypes.bool,
 
-  onViewTransformed: PropTypes.func,
+  onViewTransformed: React.PropTypes.func,
 
-  onTransformGestureReleased: PropTypes.func,
+  onTransformGestureReleased: React.PropTypes.func,
 
-  onSingleTapConfirmed: PropTypes.func
+  onSingleTapConfirmed: React.PropTypes.func
 };
 ViewTransformer.defaultProps = {
   maxOverScrollDistance: 20,

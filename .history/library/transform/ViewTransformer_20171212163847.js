@@ -422,36 +422,36 @@ ViewTransformer.propTypes = {
   /**
    * Use false to disable transform. Default is true.
    */
-  enableTransform: PropTypes.bool,
+  enableTransform: React.PropTypes.bool,
 
   /**
    * Use false to disable scaling. Default is true.
    */
-  enableScale: PropTypes.bool,
+  enableScale: React.PropTypes.bool,
 
   /**
    * Use false to disable translateX/translateY. Default is true.
    */
-  enableTranslate: PropTypes.bool,
+  enableTranslate: React.PropTypes.bool,
 
   /**
    * Default is 20
    */
-  maxOverScrollDistance: PropTypes.number,
+  maxOverScrollDistance: React.PropTypes.number,
 
-  maxScale: PropTypes.number,
-  contentAspectRatio: PropTypes.number,
+  maxScale: React.PropTypes.number,
+  contentAspectRatio: React.PropTypes.number,
 
   /**
    * Use true to enable resistance effect on over pulling. Default is false.
    */
-  enableResistance: PropTypes.bool,
+  enableResistance: React.PropTypes.bool,
 
-  onViewTransformed: PropTypes.func,
+  onViewTransformed: React.PropTypes.func,
 
-  onTransformGestureReleased: PropTypes.func,
+  onTransformGestureReleased: React.PropTypes.func,
 
-  onSingleTapConfirmed: PropTypes.func
+  onSingleTapConfirmed: React.PropTypes.func
 };
 ViewTransformer.defaultProps = {
   maxOverScrollDistance: 20,
