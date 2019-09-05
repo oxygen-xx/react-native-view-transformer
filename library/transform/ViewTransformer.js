@@ -113,6 +113,14 @@ export default class ViewTransformer extends React.Component {
     if (!this.props.enableTransform) {
       gestureResponder = {};
     }
+    
+    // FIXME: tmp fix infinity error
+    let { scale, translateX, translateY } = this.state;
+    if (scale === 0 && (Number.isFinite(translateX) || Number.isFinite(translateY))) {
+      scale = 1;
+      translateX = 0;
+      translateY = 0;
+    }
 
     return (
       <View
